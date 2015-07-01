@@ -18,7 +18,7 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <p id="testP">Hello world! This is HTML5 Boilerplate.</p>
 
         <script>
         	/*说明：javascript中有5种简单类型（也成为基本数据类型）：Undefined,Null,Boolean,Number和String，还有一种复杂数据类型--Object，Object本质上是由一组无序的名值对组成的。
@@ -89,6 +89,163 @@
 			//判断是数组类型
 			console.log("Array:",(Object.prototype.toString.call(array) === '[object Array]'));
 
+  			(function(){
+  				var ObjectProto = Object.prototype;
+				var isArguments=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object Arguments]"?true:false;
+				};
+				var isFunction=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object Function]"?true:false;
+				};
+				var isString=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object String]"?true:false;
+				};
+				var isNumber=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object Number]"?true:false;
+				};
+				var isArray=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object Array]"?true:false;
+				};
+				var isDate=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object Date]"?true:false;
+				};
+				var isRegExp=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object RegExp]"?true:false;
+				};
+				var isBoolean=function (obj) {
+					return ObjectProto.toString.call(obj)=="[object Boolean]"?true:false;
+				};
+				var isNull = function(obj) {
+	    			return obj === null?true:false;
+	  			};
+	  			var isUndefined = function(obj) {
+	    			return obj === void 0?true:false;
+	  			};
+	  			var isNaN = function(obj) {
+	    			return isNumber(obj) && obj !== +obj;
+	  			};
+	  			var isObject = function(obj) {
+	    			var type = typeof obj;
+	    			return type === 'function' || type === 'object' && !!obj;
+	  			};
+	  			var isElement = function(obj) {
+	    			return !!(obj && obj.nodeType === 1);
+	  			};
+	  			var has = function(obj, key) {
+	    			return obj != null && ObjectProto.hasOwnProperty.call(obj, key);
+	  			};
+	  			var isEmpty = function(obj) {
+	    			if (obj == null){
+	    				return true;	
+	    			} 
+	    			if (isArray(obj) || isString(obj) || isArguments(obj)){
+	    				return obj.length === 0;
+	    			}
+	    			for (var key in obj){
+	    				if (has(obj, key)){
+	    					return false;	
+	    				} 
+	    			} 
+	    			return true;
+	  			};
+	  			var nativeKeys = Object.keys;
+	  			var keys = function(obj) {
+	    			if (!isObject(obj)){
+	    				return [];
+	    			} 
+	    			if (nativeKeys){
+	    				return nativeKeys(obj);	
+	    			} 
+	    			var keys = [];
+	    			for (var key in obj) {
+	    				if (has(obj, key)){
+	    					keys.push(key);
+	    				} 
+	    			}
+	    			return keys;
+	  			};
+
+	  			var values = function(obj) {
+	    			var keysArr = keys(obj);
+	    			var length = keysArr.length;
+	    			var values = Array(length);
+	    			for (var i = 0; i < length; i++) {
+	      				values[i] = obj[keysArr[i]];
+	    			}
+	    			return values;
+	  			};
+	  			//Convert an object into a list of `[key, value]` pairs
+	  		    var pairs = function(obj) {
+	    			var keysArr = keys(obj);
+	    			var length = keysArr.length;
+	    			var pairs = Array(length);
+	    			for (var i = 0; i < length; i++) {
+	      				pairs[i] = [keysArr[i], obj[keysArr[i]]];
+	    			}
+	    			return pairs;
+	  			};
+  				console.log("-----------------以下是分割线------------------");
+  				console.log("-----------------调用方法------------------");
+  				console.log("isArguments",isArguments(arguments));
+  				function testFunction(){
+
+  				};
+  				var testString = "mike",testInt=123,testArr=['mike','is','me'],testDate=new Date(),
+  					testReg=/^abc/,testBoolean=true,testNull=null,testUndefined,testNaN=NaN,testObj={id:789,name:'mike',gender:'male'},
+  					testElement=document.getElementById('testP');
+  				console.log("isFunction",isFunction(testString),isFunction(testFunction));
+  				console.log("isString",isString(testString),isString(testInt));
+  				console.log("isNumber",isNumber(testInt),isNumber(testString));
+  				console.log("isArray",isArray(testArr),isArray(testInt));
+  				console.log("isDate",isDate(testDate));
+  				console.log("isRegExp",isRegExp(testReg));
+  				console.log("isBoolean",isBoolean(testBoolean));
+  				console.log("isNull",isNull(testNull));
+  				console.log("isUndefined",isUndefined(testUndefined));
+  				console.log("isNaN",isNaN(testNaN));
+  				console.log("isObject",isObject(testObj));
+  				console.log("isElement",isElement(testElement));
+  				console.log("keys",keys(testObj));
+  				console.log("values",values(testObj));
+  				console.log("pairs",pairs(testObj));
+  			})();
+  			/*	浏览器控制台日志：
+  				typeofAndInstanceOf.html:41 undefined: undefined
+				typeofAndInstanceOf.html:42 undefined: true
+				typeofAndInstanceOf.html:49 Boolean: true
+				typeofAndInstanceOf.html:50 Boolean: object
+				typeofAndInstanceOf.html:51 Boolean: boolean
+				typeofAndInstanceOf.html:56 String: true
+				typeofAndInstanceOf.html:57 String: object
+				typeofAndInstanceOf.html:58 String: string
+				typeofAndInstanceOf.html:63 Number: true
+				typeofAndInstanceOf.html:66 Null: object
+				typeofAndInstanceOf.html:69 Object: true
+				typeofAndInstanceOf.html:72 Object: true
+				typeofAndInstanceOf.html:78 Function: true
+				typeofAndInstanceOf.html:85 Function: true
+				typeofAndInstanceOf.html:86 Object: true
+				typeofAndInstanceOf.html:88 Array: true
+				typeofAndInstanceOf.html:90 Array: true
+				typeofAndInstanceOf.html:188 -----------------以下是分割线------------------
+				typeofAndInstanceOf.html:189 -----------------调用方法------------------
+				typeofAndInstanceOf.html:190 isArguments true
+				typeofAndInstanceOf.html:197 isFunction false true
+				typeofAndInstanceOf.html:198 isString true false
+				typeofAndInstanceOf.html:199 isNumber true false
+				typeofAndInstanceOf.html:200 isArray true false
+				typeofAndInstanceOf.html:201 isDate true
+				typeofAndInstanceOf.html:202 isRegExp true
+				typeofAndInstanceOf.html:203 isBoolean true
+				typeofAndInstanceOf.html:204 isNull true
+				typeofAndInstanceOf.html:205 isUndefined true
+				typeofAndInstanceOf.html:206 isNaN true
+				typeofAndInstanceOf.html:207 isObject true
+				typeofAndInstanceOf.html:208 isElement true
+				typeofAndInstanceOf.html:209 keys ["id", "name", "gender"]
+				typeofAndInstanceOf.html:210 values [789, "mike", "male"]
+				typeofAndInstanceOf.html:211 pairs [Array[2], Array[2], Array[2]]0: Array[2]0: "id"1: 789length: 2__proto__: Array[0]1: Array[2]2: Array[2]length: 3__proto__: Array[0]
+			*/
         </script>
     </body>
 </html>
