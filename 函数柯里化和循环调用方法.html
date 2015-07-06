@@ -75,6 +75,81 @@
         console.log(add(10)(15));//25
         console.log(add(1)(5));//6
     </script>
+    <script>
+	//1. 参数复用；2. 提前返回；3. 延迟计算/运行。
+		var smallKenan = function(action) {
+		    var bigKenan = function(doing) {
+		        var result = "";
+		        if (action === "take drugs") {
+		            if (doing === "bathWithGirlFriend") {
+		                result = "尖叫，新一，你这个色狼，然后一巴掌，脸煮熟了~";
+		            } else if (doing === "pointOutKiller") {
+		                result = "新一，这个案子就交给你的，快点找出谁是凶手吧~";
+		            }
+		        } else {
+		            if (doing === "bathWithGirlFriend") {
+		                result = "来吧，柯南，一起洗澡吧~";
+		            } else if (doing === "pointOutKiller") {
+		                result = "小孩子家，滚一边去！";
+		            }
+		        }
+		        console.log(result);
+		        return arguments.callee; // 等同于return bigKenan
+    	  };
+    return bigKenan;
+};
+
+// 小柯南吃药了，然后和毛利兰洗澡，凶案现场指证犯人；结果是……
+smallKenan("take drugs")("bathWithGirlFriend")("pointOutKiller");
+
+function update(item){
+	return function(content){
+		$('#'+item).html(content);
+	}
+}	
+
+function refresh(url,callback){
+ 	var params = {
+        type : "echo",
+        data : ""
+    };
+    $.ajax({
+        type:"post",
+        url:url,
+        cache:false,
+        async:true,
+        dataType:"json",
+        data:params,
+        //当异步请求成功时调用
+        success: function(data, status){
+            callback(data);
+        },
+        //当请求出现错误时调用
+        error: function(err){
+            alert("error : "+err);
+        }
+    });
+}
+
+//refresh("action.do?target=news", update("newsPanel"));
+//refresh("action.do?target=articles", update("articlePanel"));
+//refresh("action.do?target=pictures", update("picturePanel"));
+
+var add2 = function(num1){
+	var value=0;
+	value+=num1;
+	var addSum=function(num2){
+		value+=num2;
+		return arguments.callee;
+	}
+	addSum.toString=function(){
+		return value.toString();
+	}
+	return addSum;
+}
+
+console.log(add2(1)(2)(3));
+	</script>
 </head>
 <body>
 
