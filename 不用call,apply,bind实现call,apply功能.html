@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <p>F12 打开控制台 in 浏览器</p>
+		<script>
+			Function.prototype.apply=function(obj,arr){
+				obj=obj||window;
+				obj._tem=this;
+				var result;
+				if (!arr){
+					result = obj._tem();
+				}else{
+					var args = [];
+					for (var i = 0,len=arr.length; i < len; i++) {
+						args.push('arr['+i+']');
+					};
+					result = eval('obj._tem('+args+')');
+				}
+				delete obj._tem;
+				return result;
+			}
+
+			function Mom(){
+
+			}
+			Mom.callSon = function(){
+				console.log('callSon',arguments[0]);
+			}
+
+			function Son(){
+
+			}
+			Mom.callSon.apply(new Son(),['have supper']);
+		</script>
+
+    </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <p>F12 打开控制台 in 浏览器</p>
+		<script>
+			(function(window){
+				window.Aop=function(){
+					var before=function(){
+						var argu = [].slice.call(arguments,0);
+							argu[0]();
+	                    	argu[1]();
+					};
+
+					var after = function(){
+						var argu = [].slice.call(arguments,0);
+	                	argu[1]();
+	                	argu[0]();
+					}
+
+					return {
+						before:before,
+						after:after
+					}
+				}();
+			})(this);
+			
+
+			var Wife={
+				callMe:function(){
+					console.log('回家吃饭啦！！！');
+				},
+				startWork:function(){
+					console.log('该工作啦！');
+				},
+				gotoSleep:function(){
+					console.log('洗洗睡了！');
+				}
+			}
+			var TaoBao={
+				shopping:function(){
+					console.log('刷淘宝！');
+				}
+			}
+			var Me={
+				receiveMessage:function(){
+					console.log('收到通知');
+				}
+			}
+
+			Aop.before(TaoBao["shopping"],Wife.callMe);
+			Aop.before(TaoBao["shopping"],Wife.startWork);
+
+			Aop.after(Me.receiveMessage,Wife.callMe);
+			Aop.after(Me.receiveMessage,Wife.gotoSleep);
+		</script>
+
+    </body>
+</html>
