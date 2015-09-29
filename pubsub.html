@@ -22,7 +22,7 @@
         		});
         	},
         	removeEvent = function(eName,handler,scope){
-        		scope = scope||this;
+        		var fns = events[eventName],scope = scope||this;
         		if (!fns) return;
         		events[eName]=events[eName].filter(function(fn){
         			return fn.scope!=scope||fn.handler!=handler
